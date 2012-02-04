@@ -24,19 +24,19 @@ namespace gj4thFeb2012
             float dt = gameTime.ElapsedGameTime.Milliseconds;
 
             KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.NumPad4))
             {
                 this._position += (new Vector2(-1,0)* dt);
             }
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.NumPad6))
             {
                 this._position += (new Vector2(1, 0) * dt);
             }
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.NumPad8))
             {
                 this._position += (new Vector2(0, -1) * dt);
             }
-            if (keyboardState.IsKeyDown(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.NumPad2))
             {
                 this._position += (new Vector2(0, 1) * dt);
             }
