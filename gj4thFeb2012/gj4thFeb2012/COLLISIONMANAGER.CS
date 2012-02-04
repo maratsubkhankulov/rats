@@ -23,9 +23,7 @@ namespace gj4thFeb2012
             return a.Intersects(b);
         }
 
-        public bool getIntersectionDepth(
-
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             foreach (Sprite a in entities)
             {

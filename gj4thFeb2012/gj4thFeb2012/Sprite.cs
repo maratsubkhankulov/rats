@@ -46,5 +46,10 @@ namespace gj4thFeb2012
         {
             spriteBatch.Draw(_texture, Position, Color.White);
         }
+
+        public void HandleCollision(Sprite entity)
+        {
+            //Do something
+        }
     }
 }
