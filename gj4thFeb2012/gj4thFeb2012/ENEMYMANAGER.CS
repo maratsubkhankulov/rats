@@ -29,7 +29,10 @@ namespace gj4thFeb2012
 
         public void SetTargetAll(Sprite sprite)
         {
-
+            foreach (Enemy e in enemies)
+            {
+                e.SetTarget(sprite);
+            }
         }
 
         public void Register(Enemy enemy)

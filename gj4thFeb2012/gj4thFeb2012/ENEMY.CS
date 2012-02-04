@@ -53,7 +53,15 @@ namespace gj4thFeb2012
 
         private Vector2 towardsTargetOffset(GameTime gameTime)
         {
-            return target.Position - this.Position;
+            Vector2 v = (target.Position - this.Position);
+            v.Normalize();
+            return v;
+        }
+
+        public void SetTarget(Sprite sprite)
+        {
+            target = sprite;
+            state = State.Chase;
         }
     }
 }

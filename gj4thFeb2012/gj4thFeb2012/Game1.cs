@@ -38,6 +38,8 @@ namespace gj4thFeb2012
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            // Make mouse visible
+            this.IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -87,8 +89,8 @@ namespace gj4thFeb2012
             camera.Update(gameTime);
 
             //Enemy targeting test
-            if (Mouse.GetState().LeftButton ==  ButtonState.Released){
-                enemyManager.SetTargetAll(new Sprite(null, Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            if (Mouse.GetState().LeftButton ==  ButtonState.Pressed){
+                enemyManager.SetTargetAll(new Sprite(null, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             }
 
             base.Update(gameTime);
