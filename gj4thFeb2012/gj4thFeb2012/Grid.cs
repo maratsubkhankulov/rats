@@ -14,6 +14,7 @@ namespace gj4thFeb2012
         public const int TileWidth = 30;
         private int _width;
         private int _height;
+        private List<Sprite> _mineSprites;
 
         private readonly Texture2D _mineTexture;
         private readonly Sprite _mineHintSprite;
@@ -40,6 +41,7 @@ namespace gj4thFeb2012
             _mineTexture = mineTexture;
             _mineHintSprite = new Sprite(mineHintTexture);
             _spriteManager = spriteManager;
+            _mineSprites = new List<Sprite>();
 
             _spriteManager.Register(_mineHintSprite);
 
@@ -78,12 +80,20 @@ namespace gj4thFeb2012
         internal void SetMine(int x, int y)
         {
             Tiles[y, x] = Tile.Mine;
-            _spriteManager.Register(new Sprite(_mineTexture, new Vector2(x * TileWidth, y * TileWidth)));
+            Sprite mine = new Sprite(_mineTexture, new Vector2(x * TileWidth, y * TileWidth));
+            //_mineSprites.Add(mine);
+            _spriteManager.Register(mine);
+        }
+
+        public void RemoveMine(int x, int y)
+        {
+            Tiles[y, x] = Tile.Floor;
         }
 
         internal void SetMineHint(int x, int y)
         {
             _mineHintSprite.Position = new Vector2(x*TileWidth, y*TileWidth);
+            //_mineSprites.Remove(_mineSprites.l
         }
     }
 }

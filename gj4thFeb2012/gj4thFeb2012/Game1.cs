@@ -65,6 +65,8 @@ namespace gj4thFeb2012
             _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
             _spriteManager.Register(_player);
             _camera.AttachTo(_player);
+            CollisionManager collisionManager = new CollisionManager(this);
+            this.Components.Add(collisionManager);
 
             //Test enemies
             _enemyManager = new EnemyManager(this, _grid);

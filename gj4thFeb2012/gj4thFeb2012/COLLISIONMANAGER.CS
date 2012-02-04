@@ -12,7 +12,7 @@ namespace gj4thFeb2012
 
         public CollisionManager(Game game) : base(game)
         {
-
+            entities = new List<Sprite>();
         }
 
         static public void HandleGridCollisions(Grid grid, Sprite sprite)
@@ -30,6 +30,12 @@ namespace gj4thFeb2012
                     if (grid.Tiles[y, x] == Grid.Tile.Wall)
                     {
                         sprite.Position += IntersectionDepth(grid.TileBoundingRectangle(x, y), BoundingRectangle);
+                    }
+
+                    if (grid.Tiles[y, x] == Grid.Tile.Mine)
+                    {
+                         sprite.HandleCollision(null);
+                         grid.RemoveMine(x, y);
                     }
                 }
             }

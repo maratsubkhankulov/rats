@@ -31,6 +31,7 @@ namespace gj4thFeb2012
                 //Circular formation
                 foreach (Enemy f in enemies)
                 {
+                    if (e.isDead()) break;
                     if (e == f) break;
                     float dist = Vector2.Distance(e.Position, f.Position);
                     if (dist == 0) { e.Move(new Vector2(Game1.random.Next(5, 10) / 10, Game1.random.Next(5, 10) / 10)); break; }

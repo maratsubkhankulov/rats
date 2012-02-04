@@ -33,6 +33,8 @@ namespace gj4thFeb2012
                     roam(gameTime);
                     simpleChase(gameTime);
                     break;
+                case State.Dead:
+                    break;
                 default:
                     throw (new Exception("Wrong state"));
             }
@@ -71,6 +73,22 @@ namespace gj4thFeb2012
         public void Move(Vector2 vector)
         {
             this.Position += vector * speed;
+        }
+
+        public void die()
+        {
+            state = State.Dead;
+        }
+
+        public bool isDead()
+        {
+            return (state == State.Dead);
+        }
+
+        public override void HandleCollision(Sprite sprite)
+        {
+            die();
+            
         }
     }
 }
