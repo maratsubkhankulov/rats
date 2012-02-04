@@ -15,6 +15,59 @@ namespace gj4thFeb2012
 
         }
 
+        static public void HandleGridCollisions(Grid grid, Sprite sprite)
+        {
+            Rectangle BoundingRectangle = sprite.BoundingRectangle;
+            int minX = (int)Math.Floor((float)BoundingRectangle.Left / Grid.TileWidth);
+            int maxX = (int)Math.Ceiling((float)BoundingRectangle.Right / Grid.TileWidth);
+            int minY = (int)Math.Floor((float)BoundingRectangle.Top / Grid.TileWidth);
+            int maxY = (int)Math.Ceiling((float)BoundingRectangle.Bottom / Grid.TileWidth);
+
+            for (int x = minX; x <= maxX; x++)
+            {
+                for (int y = minY; y <= maxY; y++)
+                {
+                    if (grid.Tiles[y, x] == Grid.Tile.Wall)
+                    {
+                        sprite.Position += IntersectionDepth(grid.TileBoundingRectangle(x, y), BoundingRectangle);
+                    }
+                }
+            }
+        }
+
+        static private Vector2 IntersectionDepth(Rectangle a, Rectangle b)
+        {
+            int xOverlap, yOverlap;
+
+            if (!a.Intersects(b))
+                return Vector2.Zero;
+
+            int diff1 = a.Right - b.Left;
+            int diff2 = b.Right - a.Left;
+
+            if (Math.Pow(diff1, 2) < Math.Pow(diff2, 2))
+                xOverlap = diff1;
+            else
+                // the rectangles overlap on the other side
+                // invert the vector so that it will push out of the collision
+                xOverlap = diff2 * -1;
+
+            diff1 = a.Bottom - b.Top;
+            diff2 = b.Bottom - a.Top;
+
+            if (Math.Pow(diff1, 2) < Math.Pow(diff2, 2))
+                yOverlap = diff1;
+            else
+                // the rectangles overlap on the other side
+                // invert the vector so that it will push out of the collision
+                yOverlap = diff2 * -1;
+
+            if (Math.Pow(yOverlap, 2) < Math.Pow(xOverlap, 2))
+                return new Vector2(0, yOverlap);
+            else
+                return new Vector2(xOverlap, 0);
+        }
+
         public bool isCollision(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
         {
             Rectangle a = new Rectangle((int)a1.X, (int)a1.Y, (int)a2.X, (int)a2.Y);
