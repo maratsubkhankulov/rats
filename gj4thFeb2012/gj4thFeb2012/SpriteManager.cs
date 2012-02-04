@@ -41,12 +41,12 @@ namespace gj4thFeb2012
 
         public override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
             foreach (Sprite sprite in sprites)
             {
                 if (sprite.BoundingRectangle.Intersects(_camera.WorldBoundingRectangle))
-                    this.spriteBatch.Draw(sprite.Texture, sprite.Position - _camera.Position, sprite.Color);       
+                    this.spriteBatch.Draw(sprite.Texture, sprite.Position - _camera.Position, null, sprite.Color, 0, Vector2.Zero, 1, SpriteEffects.None, sprite.Depth);
             }
 
             spriteBatch.End();

@@ -12,6 +12,7 @@ namespace gj4thFeb2012
         public Vector2 Position;
         private readonly Texture2D _texture;
         private Color _color;
+        public readonly float Depth;
 
         public Color Color
         {
@@ -33,11 +34,12 @@ namespace gj4thFeb2012
             }
         }
 
-        public Sprite(Texture2D texture, Vector2 position = default(Vector2))
+        public Sprite(Texture2D texture, Vector2 position = default(Vector2), float depth = 0)
         {
             _texture = texture;
             Position = position;
             _color = Color.White;
+            Depth = depth;
         }
 
         public virtual void Update(GameTime gameTime) { }
