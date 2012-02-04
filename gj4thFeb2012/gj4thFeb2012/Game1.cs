@@ -19,7 +19,9 @@ namespace gj4thFeb2012
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Camera camera;
-        SpriteManager spriteManager;        
+        SpriteManager spriteManager;
+        EnemyManager enemyManager;
+        CollisionManager collisionManager;
 
         public Game1()
         {
@@ -51,12 +53,15 @@ namespace gj4thFeb2012
             camera = new Camera();
             spriteManager =  new SpriteManager(this, GraphicsDevice, spriteBatch, camera);
             this.Components.Add(spriteManager);
-
-            //Test sprites
-            Sprite mySprite = new Sprite(this.Content.Load<Texture2D>("enemy"), new Vector2(20, 20));
-            spriteManager.Register(mySprite);
-
             Grid grid = new Grid(this.Content.Load<Texture2D>("level_test"), spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
+
+            //Test enemies
+            enemyManager = new EnemyManager(this, grid);
+            this.Components.Add(enemyManager);
+            Enemy e = new Enemy(this.Content.Load<Texture2D>("enemy"), new Vector2(50, 50));
+            enemyManager.Register(e);
+            spriteManager.Register(e);
+
         }
 
         /// <summary>
@@ -80,6 +85,11 @@ namespace gj4thFeb2012
                 this.Exit();
 
             camera.Update(gameTime);
+
+            //Enemy targeting test
+            if (Mouse.GetState().LeftButton ==  ButtonState.Released){
+                enemyManager.SetTargetAll(new Sprite(null, Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            }
 
             base.Update(gameTime);
         }

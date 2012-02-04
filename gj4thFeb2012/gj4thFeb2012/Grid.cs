@@ -55,7 +55,6 @@ namespace gj4thFeb2012
 
                             default:
                                 throw new Exception("NO");
-                            break;
                     }
 
                     spriteManager.Register(sprite);

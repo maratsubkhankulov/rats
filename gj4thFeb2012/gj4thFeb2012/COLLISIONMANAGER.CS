@@ -34,7 +34,7 @@ namespace gj4thFeb2012
                 Vector2 dif2 = 
         }*/
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             foreach (Sprite a in entities)
             {
