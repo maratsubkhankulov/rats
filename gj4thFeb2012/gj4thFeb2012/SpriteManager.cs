@@ -45,7 +45,8 @@ namespace gj4thFeb2012
 
             foreach (Sprite sprite in sprites)
             {
-                this.spriteBatch.Draw(sprite.Texture, sprite.Position - _camera.Position, sprite.Color);       
+                if (sprite.BoundingRectangle.Intersects(_camera.WorldBoundingRectangle))
+                    this.spriteBatch.Draw(sprite.Texture, sprite.Position - _camera.Position, sprite.Color);       
             }
 
             spriteBatch.End();
