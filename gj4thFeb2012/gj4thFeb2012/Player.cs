@@ -7,5 +7,6 @@ namespace gj4thFeb2012
 {
     class Player
     {
+        Player() { }
     }
 }
