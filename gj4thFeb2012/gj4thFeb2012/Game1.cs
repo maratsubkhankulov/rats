@@ -56,7 +56,7 @@ namespace gj4thFeb2012
 
             _grid = new Grid(this.Content.Load<Texture2D>("level_test"), _spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
 
-            _player = new Player(this.Content.Load<Texture2D>("player"), Vector2.Zero);
+            _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
             _spriteManager.Register(_player);
         }
 
