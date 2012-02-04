@@ -46,9 +46,12 @@ namespace gj4thFeb2012
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //SpriteManager spriteManager();
-            //this.Components.Add(spriteManager);
-            //this.Component.add
+            SpriteManager spriteManager =  new SpriteManager(this, GraphicsDevice, spriteBatch);
+            this.Components.Add(spriteManager);
+
+            //Test sprites
+            Sprite mySprite = new Sprite(this.Content.Load<Texture2D>("enemy"), new Vector2(20, 20));
+            spriteManager.Register(mySprite);
         }
 
         /// <summary>

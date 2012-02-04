@@ -34,8 +34,6 @@ namespace gj4thFeb2012
             base.Initialize();
         }
 
-        Sprite workingSprite;
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
