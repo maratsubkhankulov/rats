@@ -46,22 +46,16 @@ namespace gj4thFeb2012
             int minY = (int)Math.Floor((float)BoundingRectangle.Top / Grid.TileWidth);
             int maxY = (int)Math.Ceiling((float)BoundingRectangle.Bottom / Grid.TileWidth);
 
-            Vector2 displacement = new Vector2(200, 200);
             for (int x = minX; x <= maxX; x++)
             {
                 for (int y = minY; y <= maxY; y++)
                 {
                     if (grid.Tiles[y, x] == Grid.Tile.Wall)
                     {
-                        Vector2 new_displacement = IntersectionDepth(grid.TileBoundingRectangle(x,y), BoundingRectangle);
-                        if (new_displacement != Vector2.Zero && new_displacement.LengthSquared() < displacement.LengthSquared())
-                            displacement = new_displacement;
+                        Position += IntersectionDepth(grid.TileBoundingRectangle(x,y), BoundingRectangle);
                     }
                 }
             }
-
-            if (displacement != new Vector2(200, 200))
-                Position += displacement;
         }
 
         private Vector2 IntersectionDepth(Rectangle a, Rectangle b)

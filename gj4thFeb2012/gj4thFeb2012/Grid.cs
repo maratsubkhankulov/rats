@@ -14,7 +14,7 @@ namespace gj4thFeb2012
 
         private int _width;
         private int _height;
-        public const int TileWidth = 10;
+        public const int TileWidth = 30;
 
         public enum Tile
         {
