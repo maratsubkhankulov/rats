@@ -10,24 +10,52 @@ namespace gj4thFeb2012
 {
     public class Camera
     {
-        Vector2 _position;
+        private Sprite _attachment;
+        private GraphicsDevice _graphicsDevice;
+        
+        private Vector2 _position;
+        private const float CameraSpeed = Player.MoveSpeed;
+        private const int BorderSize = 100;
 
         public Vector2 Position
         {
             get { return _position; }
             set { _position = value; }
         }
-        Vector2 _dimension;
+
+        private Rectangle StaticZoneRectangle
+        {
+            get { return new Rectangle((int)_position.X + BorderSize, (int)_position.Y + BorderSize, _graphicsDevice.Viewport.Width - 2 * BorderSize, _graphicsDevice.Viewport.Height - 2 * BorderSize); }
+        }
 
         public void Update(GameTime gameTime)
         {
-            
+            float dt = gameTime.ElapsedGameTime.Milliseconds;
+
+            if (_attachment != null)
+            {
+                Vector2 velocity = default(Vector2);
+                if (_attachment.BoundingRectangle.Right > StaticZoneRectangle.Right)
+                    velocity += new Vector2(CameraSpeed * dt, 0);
+                if (_attachment.BoundingRectangle.Left < StaticZoneRectangle.Left)
+                    velocity += new Vector2(-CameraSpeed * dt, 0);
+                if (_attachment.BoundingRectangle.Bottom > StaticZoneRectangle.Bottom)
+                    velocity += new Vector2(0, CameraSpeed * dt);
+                if (_attachment.BoundingRectangle.Top < StaticZoneRectangle.Top)
+                    velocity += new Vector2(0, -CameraSpeed * dt);
+
+                _position += velocity;
+            }
         }
 
-        public Camera()
+        public Camera(GraphicsDevice graphicsDevice)
         {
-            _position = new Vector2(-5, 5);
-            _dimension = new Vector2(800, 600);
+            _graphicsDevice = graphicsDevice;
+        }
+
+        internal void AttachTo(Player player)
+        {
+            _attachment = player;
         }
     }
 }

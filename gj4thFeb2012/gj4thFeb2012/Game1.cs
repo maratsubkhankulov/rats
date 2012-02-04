@@ -26,6 +26,9 @@ namespace gj4thFeb2012
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 600;
+
             Content.RootDirectory = "Content";
         }
 
@@ -50,7 +53,7 @@ namespace gj4thFeb2012
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _camera = new Camera();
+            _camera = new Camera(GraphicsDevice);
             _spriteManager =  new SpriteManager(this, GraphicsDevice, _spriteBatch, _camera);
             this.Components.Add(_spriteManager);
 
@@ -58,6 +61,8 @@ namespace gj4thFeb2012
 
             _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
             _spriteManager.Register(_player);
+
+            _camera.AttachTo(_player);
         }
 
         /// <summary>

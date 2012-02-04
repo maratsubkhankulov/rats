@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace gj4thFeb2012
 {
-    class Grid
+    public class Grid
     {
         public Tile[,] Tiles;
 

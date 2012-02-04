@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace gj4thFeb2012
 {
-    class Player : Sprite
+    public class Player : Sprite
     {
-        private const float MoveSpeed = 0.1F;
+        public const float MoveSpeed = 0.1F;
         public Player(Texture2D texture, Vector2 position):base(texture, position)
         {
             
