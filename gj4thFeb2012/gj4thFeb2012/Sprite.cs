@@ -40,7 +40,7 @@ namespace gj4thFeb2012
             _color = Color.White;
         }
 
-        public virtual void Update(int dt) { }
+        public virtual void Update(GameTime gameTime) { }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

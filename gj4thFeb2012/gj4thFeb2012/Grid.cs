@@ -14,7 +14,7 @@ namespace gj4thFeb2012
 
         private int _width;
         private int _height;
-        private const int TileWidth = 10;
+        public const int TileWidth = 10;
 
         public enum Tile
         {
@@ -24,6 +24,11 @@ namespace gj4thFeb2012
         }
 
         private Dictionary<Color, Tile> tileDictionary = new Dictionary<Color, Tile>(){{Color.Black, Tile.Wall}, {Color.White, Tile.Floor}};
+
+        public Rectangle TileBoundingRectangle(int x, int y)
+        {
+            return new Rectangle(x * TileWidth, y * TileWidth, TileWidth, TileWidth);
+        }
 
         public Grid(Texture2D gridTexture, SpriteManager spriteManager, Texture2D floorTexture, Texture2D wallTexture)
         {
