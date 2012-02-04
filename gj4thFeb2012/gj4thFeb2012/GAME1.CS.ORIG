@@ -16,14 +16,21 @@ namespace gj4thFeb2012
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+<<<<<<< local
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+        Camera camera;
+        SpriteManager spriteManager;
+        EnemyManager enemyManager;
+        CollisionManager collisionManager;
+=======
         GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
         Camera _camera;
         SpriteManager _spriteManager;
         Player _player;
         Grid _grid;
-        EnemyManager _enemyManager;
-        CollisionManager collisionManager;
+>>>>>>> other
 
         public Game1()
         {
@@ -56,23 +63,37 @@ namespace gj4thFeb2012
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+<<<<<<< local
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            camera = new Camera();
+            spriteManager =  new SpriteManager(this, GraphicsDevice, spriteBatch, camera);
+            this.Components.Add(spriteManager);
+            Grid grid = new Grid(this.Content.Load<Texture2D>("level_test"), spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
+=======
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new Camera(GraphicsDevice);
             _spriteManager =  new SpriteManager(this, GraphicsDevice, _spriteBatch, _camera);
             this.Components.Add(_spriteManager);
-            _grid = new Grid(this.Content.Load<Texture2D>("level_test"), _spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
+>>>>>>> other
 
+<<<<<<< local
             //Test enemies
-            _enemyManager = new EnemyManager(this, _grid);
-            this.Components.Add(_enemyManager);
+            enemyManager = new EnemyManager(this, grid);
+            this.Components.Add(enemyManager);
             Enemy e = new Enemy(this.Content.Load<Texture2D>("enemy"), new Vector2(50, 50));
-            _enemyManager.Register(e);
-            _spriteManager.Register(e);
+            enemyManager.Register(e);
+            spriteManager.Register(e);
+=======
+            _grid = new Grid(this.Content.Load<Texture2D>("level_test"), _spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
+>>>>>>> other
 
+<<<<<<< local
+=======
             _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
             _spriteManager.Register(_player);
 
             _camera.AttachTo(_player);
+>>>>>>> other
         }
 
         /// <summary>
@@ -101,7 +122,7 @@ namespace gj4thFeb2012
 
             //Enemy targeting test
             if (Mouse.GetState().LeftButton ==  ButtonState.Pressed){
-                _enemyManager.SetTargetAll(new Sprite(null, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
+                enemyManager.SetTargetAll(new Sprite(null, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             }
 
             base.Update(gameTime);

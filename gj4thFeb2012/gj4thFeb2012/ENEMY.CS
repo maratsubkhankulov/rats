@@ -18,7 +18,7 @@ namespace gj4thFeb2012
             this.target = null;
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             switch (state)
             {
