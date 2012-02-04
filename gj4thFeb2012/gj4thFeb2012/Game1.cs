@@ -16,16 +16,21 @@ namespace gj4thFeb2012
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Camera camera;
-        SpriteManager spriteManager;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
+        Camera _camera;
+        SpriteManager _spriteManager;
+        Player _player;
+        Grid _grid;
         EnemyManager enemyManager;
         CollisionManager collisionManager;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 600;
+
             Content.RootDirectory = "Content";
         }
 
@@ -51,10 +56,10 @@ namespace gj4thFeb2012
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            camera = new Camera();
-            spriteManager =  new SpriteManager(this, GraphicsDevice, spriteBatch, camera);
-            this.Components.Add(spriteManager);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _camera = new Camera(GraphicsDevice);
+            _spriteManager =  new SpriteManager(this, GraphicsDevice, _spriteBatch, _camera);
+            this.Components.Add(_spriteManager);
             Grid grid = new Grid(this.Content.Load<Texture2D>("level_test"), spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
 
             //Test enemies
@@ -64,6 +69,10 @@ namespace gj4thFeb2012
             enemyManager.Register(e);
             spriteManager.Register(e);
 
+            _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
+            _spriteManager.Register(_player);
+
+            _camera.AttachTo(_player);
         }
 
         /// <summary>
@@ -86,7 +95,9 @@ namespace gj4thFeb2012
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            camera.Update(gameTime);
+            _camera.Update(gameTime);
+            _player.Update(gameTime);
+            _player.HandleGridCollisions(_grid);
 
             //Enemy targeting test
             if (Mouse.GetState().LeftButton ==  ButtonState.Pressed){
