@@ -55,6 +55,8 @@ namespace gj4thFeb2012
             //Test sprites
             Sprite mySprite = new Sprite(this.Content.Load<Texture2D>("enemy"), new Vector2(20, 20));
             spriteManager.Register(mySprite);
+
+            Grid grid = new Grid(this.Content.Load<Texture2D>("level_test"), spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
         }
 
         /// <summary>
