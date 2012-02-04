@@ -10,33 +10,108 @@ namespace gj4thFeb2012
 {
     public class Player : Sprite
     {
+        enum Facing
+        {
+            Up,
+            Down,
+            Left,
+            Right
+        }
+
         public const float MoveSpeed = 0.1F;
+        private Facing currentOrientation = default(Facing);
+
         public Player(Texture2D texture, Vector2 position):base(texture, position)
         {
             
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Grid grid)
         {
             float dt = gameTime.ElapsedGameTime.Milliseconds;
+
+            MineHint(grid);
 
             KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.A))
             {
                 this.Position += (new Vector2(-MoveSpeed, 0) * dt);
+                currentOrientation = Facing.Left;
             }
             if (keyboardState.IsKeyDown(Keys.D))
             {
                 this.Position += (new Vector2(MoveSpeed, 0) * dt);
+                currentOrientation = Facing.Right;
             }
             if (keyboardState.IsKeyDown(Keys.W))
             {
                 this.Position += (new Vector2(0, -MoveSpeed) * dt);
+                currentOrientation = Facing.Up;
             }
             if (keyboardState.IsKeyDown(Keys.S))
             {
                 this.Position += (new Vector2(0, MoveSpeed) * dt);
+                currentOrientation = Facing.Down;
             }
+
+            if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                PlaceMine(grid);
+            }
+        }
+
+        private void MineHint(Grid grid)
+        {
+            int squareX, squareY; 
+            CalculateMineSquares(out squareX, out squareY);
+            grid.SetMineHint(squareX, squareY);
+        }
+
+        private void PlaceMine(Grid grid)
+        {
+            int squareX, squareY; 
+            CalculateMineSquares(out squareX, out squareY);
+            grid.SetMine(squareX, squareY);
+        }
+
+        private void CalculateMineSquares(out int squareX, out int squareY)
+        {
+            int dx, dy;
+            switch (currentOrientation)
+            {
+                case Facing.Up:
+                    // use float for accuracy in division then round down
+                    dx = 0; dy = -1;
+                    break;
+                case Facing.Down:
+                    dx = 0; dy = 1;
+                    break;
+                case Facing.Left:
+                    dx = -1; dy = 0;
+                    break;
+                case Facing.Right:
+                    dx = 1; dy = 0;
+                    break;
+                default:
+                    throw new Exception("NO");
+            }
+            int xBase, yBase;
+            if (dy == 0)
+                yBase = BoundingRectangle.Center.Y;
+            else if (dy == 1)
+                yBase = BoundingRectangle.Bottom;
+            else
+                yBase = BoundingRectangle.Top;
+
+            if (dx == 0)
+                xBase = BoundingRectangle.Center.X;
+            else if (dx == 1)
+                xBase = BoundingRectangle.Right;
+            else
+                xBase = BoundingRectangle.Left;
+
+            squareX = (int)Math.Floor((float)xBase / Grid.TileWidth) + dx;
+            squareY = (int)Math.Floor((float)yBase / Grid.TileWidth) + dy;
         }
 
         public void HandleGridCollisions(Grid grid)
