@@ -108,9 +108,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+<<<<<<< local
     <Compile Include="CollisionManager.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="EnemyManager.cs" />
+=======
+    <Compile Include="ExtensionMethods.cs" />
+>>>>>>> other
     <Compile Include="Grid.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
