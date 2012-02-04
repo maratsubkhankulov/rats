@@ -14,12 +14,12 @@ namespace gj4thFeb2012
         List<Sprite> sprites;
         Camera camera;
 
-        public SpriteManager(Game game, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch)
+        public SpriteManager(Game game, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, Camera camera)
             : base(game)
         {
             this.graphicsDevice = graphicsDevice;
             this.spriteBatch = spriteBatch;
-
+            this.camera = camera;
             sprites = new List<Sprite>();
         }
 
@@ -45,7 +45,7 @@ namespace gj4thFeb2012
 
             foreach (Sprite i in sprites)
             {
-                this.spriteBatch.Draw(i.Texture, i.Position, i.Color);       
+                this.spriteBatch.Draw(i.Texture, i.Position+camera.Position, i.Color);       
             }
 
             spriteBatch.End();

@@ -18,6 +18,8 @@ namespace gj4thFeb2012
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Camera camera;
+        SpriteManager spriteManager;        
 
         public Game1()
         {
@@ -46,7 +48,8 @@ namespace gj4thFeb2012
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            SpriteManager spriteManager =  new SpriteManager(this, GraphicsDevice, spriteBatch);
+            camera = new Camera();
+            spriteManager =  new SpriteManager(this, GraphicsDevice, spriteBatch, camera);
             this.Components.Add(spriteManager);
 
             //Test sprites
@@ -74,7 +77,7 @@ namespace gj4thFeb2012
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            camera.Update(gameTime);
 
             base.Update(gameTime);
         }
