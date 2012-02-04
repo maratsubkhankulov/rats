@@ -24,6 +24,7 @@ namespace gj4thFeb2012
         Grid _grid;
         EnemyManager _enemyManager;
         CollisionManager collisionManager;
+        public static Random random = new Random();
 
         public Game1()
         {
@@ -61,18 +62,22 @@ namespace gj4thFeb2012
             _spriteManager =  new SpriteManager(this, GraphicsDevice, _spriteBatch, _camera);
             this.Components.Add(_spriteManager);
             _grid = new Grid(this.Content.Load<Texture2D>("level_test"), _spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"));
+            _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
+            _spriteManager.Register(_player);
+            _camera.AttachTo(_player);
 
             //Test enemies
             _enemyManager = new EnemyManager(this, _grid);
             this.Components.Add(_enemyManager);
-            Enemy e = new Enemy(this.Content.Load<Texture2D>("enemy"), new Vector2(50, 50));
-            _enemyManager.Register(e);
-            _spriteManager.Register(e);
-
-            _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
-            _spriteManager.Register(_player);
-
-            _camera.AttachTo(_player);
+            Random r = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                Enemy e = new Enemy(this.Content.Load<Texture2D>("enemy"), new Vector2(r.Next(150, 200)));
+                _enemyManager.Register(e);
+                _spriteManager.Register(e);
+            }
+            _enemyManager.SetTargetAll(_player);
+            //End of test
         }
 
         /// <summary>
@@ -101,7 +106,7 @@ namespace gj4thFeb2012
 
             //Enemy targeting test
             if (Mouse.GetState().LeftButton ==  ButtonState.Pressed){
-                _enemyManager.SetTargetAll(new Sprite(null, new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
+                _enemyManager.SetTargetAll(new Sprite(null, new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + _camera.Position));
             }
 
             base.Update(gameTime);
