@@ -46,8 +46,9 @@ namespace gj4thFeb2012
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            //SpriteManager spriteManager();
+            //this.Components.Add(spriteManager);
+            //this.Component.add
         }
 
         /// <summary>
