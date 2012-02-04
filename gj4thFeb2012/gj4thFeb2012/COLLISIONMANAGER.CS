@@ -23,6 +23,17 @@ namespace gj4thFeb2012
             return a.Intersects(b);
         }
 
+        /*public Vector2 getIntersectionDepth(Rectangle a, Rectangle b)
+        {
+            if (a.Right < b.Left || b.Right < a.Left)
+            {
+                return Vector2.Zero;
+            } else
+            {
+                Vector2 dif1 = a.Right - b.Left;
+                Vector2 dif2 = 
+        }*/
+
         public void Update(GameTime gameTime)
         {
             foreach (Sprite a in entities)
@@ -30,6 +41,8 @@ namespace gj4thFeb2012
                 foreach (Sprite b in entities)
                 {
 
+                    
+                    //if (getIntersectionDepth(a.BoundingRectangle, b.BoundingRectangle) > Vector2.Zero))
                     if (a.BoundingRectangle.Intersects(b.BoundingRectangle))
                     {
                         a.HandleCollision(b);
