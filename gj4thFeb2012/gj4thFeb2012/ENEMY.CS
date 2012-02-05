@@ -59,7 +59,7 @@ namespace gj4thFeb2012
                 towardsStaticTargetOffset(gameTime);
             }                
             //Random shake
-            Position += randomRandomOffset(gameTime);
+            //Position += randomRandomOffset(gameTime);
             //speed = Rng.Next(9, 10) / 10.0f;
         }
 
@@ -73,20 +73,20 @@ namespace gj4thFeb2012
             if (target != null)
             {
                 //Move towards the target
-                this.Move(towardsTargetOffset(gameTime));
+                towardsTargetOffset(gameTime);
             }
             else
             {
                 //Move towards the target
-                this.Move(towardsStaticTargetOffset(gameTime));
+                towardsStaticTargetOffset(gameTime);
             }
         }
 
         private Vector2 towardsTargetOffset(GameTime gameTime)
         {
-            Vector2 v = (target.Position - this.Position);
-            v.Normalize();
-            return v;
+            Vector2 headingVector = (target.Position - this.Position);
+            headingVector.Normalize();
+            return headingVector;
         }
 
         private Vector2 towardsStaticTargetOffset(GameTime gameTime)
@@ -139,6 +139,11 @@ namespace gj4thFeb2012
         {
             staticTarget = this.Position + new Vector2(Rng.Next(-100, 100), Rng.Next(-100, 100));
             //Set a random target
+        }
+
+        public void ReverseMotion()
+        {
+            headingVector = -headingVector;
         }
     }
 }

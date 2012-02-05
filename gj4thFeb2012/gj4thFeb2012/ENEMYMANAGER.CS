@@ -40,11 +40,15 @@ namespace gj4thFeb2012
             int groupDistanceMax = 200;
             int distanceOfVision = 300;
             _spawnTimer.Update(gameTime);
+            //Console.WriteLine("Number of enemies: " + _enemies.ToArray().Length);
 
             float dt = gameTime.ElapsedGameTime.Milliseconds;
             //Direct the enemies around the grid
             foreach (Enemy e in _enemies)
             {
+                //Delete enemies when outside the deleteRectangle
+                if (deleteEnemyOutOfBounds(e)) break;
+                
                 //Grid Collision
                 if (CollisionManager.HandleGridCollisions(_grid, e)) e.SetRandomTarget();
                 
@@ -90,6 +94,18 @@ namespace gj4thFeb2012
                 e.Update(gameTime);
             }
             base.Update(gameTime);
+        }
+
+        private bool deleteEnemyOutOfBounds(Enemy e)
+        {
+            if (!_camera.DeleteRactangle.Intersects(e.BoundingRectangle))
+            {
+                _spriteManager.Remove(e);
+                _enemies.Remove(e);
+                Console.WriteLine("Enemy deleted, but CollisionManager is unaware");
+                return true;
+            }
+            return false;
         }
 
         public void SpawnAtEdge()
