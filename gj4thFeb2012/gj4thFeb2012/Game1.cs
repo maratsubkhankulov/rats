@@ -68,7 +68,7 @@ namespace gj4thFeb2012
             this.Components.Add(collisionManager);
 
             //Test enemies
-            _enemyManager = new EnemyManager(this, _grid, _camera, _spriteManager, this.Content.Load<Texture2D>("enemy"));
+            _enemyManager = new EnemyManager(this, _grid, _player, _camera, _spriteManager, this.Content.Load<Texture2D>("enemy"));
             this.Components.Add(_enemyManager);
             
             for (int i = 0; i < 10; i++)
@@ -107,7 +107,7 @@ namespace gj4thFeb2012
 
             //Enemy targeting test
             if (Mouse.GetState().LeftButton ==  ButtonState.Pressed){
-                _enemyManager.SetTargetAll(new Sprite(null, new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + _camera.Position));
+                _enemyManager.SetTargetAll(new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + _camera.Position);
             }
 
             base.Update(gameTime);
