@@ -18,10 +18,10 @@ namespace gj4thFeb2012
         static public void HandleGridCollisions(Grid grid, Sprite sprite)
         {
             Rectangle BoundingRectangle = sprite.BoundingRectangle;
-            int minX = (int)Math.Floor((float)BoundingRectangle.Left / Grid.TileWidth);
-            int maxX = (int)Math.Ceiling((float)BoundingRectangle.Right / Grid.TileWidth);
-            int minY = (int)Math.Floor((float)BoundingRectangle.Top / Grid.TileWidth);
-            int maxY = (int)Math.Ceiling((float)BoundingRectangle.Bottom / Grid.TileWidth);
+
+            int minX, minY, maxX, maxY;
+            grid.IndicesAtCoordinate(BoundingRectangle.Left, BoundingRectangle.Top, out minX, out minY);
+            grid.IndicesAtCoordinate(BoundingRectangle.Right, BoundingRectangle.Bottom, out maxX, out maxY);
 
             for (int x = minX; x <= maxX; x++)
             {

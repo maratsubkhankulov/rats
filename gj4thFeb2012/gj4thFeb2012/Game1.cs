@@ -62,15 +62,16 @@ namespace gj4thFeb2012
             _spriteManager =  new SpriteManager(this, GraphicsDevice, _spriteBatch, _camera);
             this.Components.Add(_spriteManager);
             _grid = new Grid(this.Content.Load<Texture2D>("level_test"), _spriteManager, this.Content.Load<Texture2D>("floor_block"), this.Content.Load<Texture2D>("wall_block"), this.Content.Load<Texture2D>("mine_block"), this.Content.Load<Texture2D>("mine_hint"));
-            _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100));
+            _player = new Player(this.Content.Load<Texture2D>("player"), new Vector2(100, 100), _grid);
             _spriteManager.Register(_player);
             _camera.AttachTo(_player);
             CollisionManager collisionManager = new CollisionManager(this);
             this.Components.Add(collisionManager);
 
             //Test enemies
-            _enemyManager = new EnemyManager(this, _grid);
+            _enemyManager = new EnemyManager(this, _grid, _camera, this.Content.Load<Texture2D>("enemy"));
             this.Components.Add(_enemyManager);
+            
             Random r = new Random();
             for (int i = 0; i < 10; i++)
             {
@@ -103,7 +104,7 @@ namespace gj4thFeb2012
                 this.Exit();
 
             _camera.Update(gameTime);
-            _player.Update(gameTime, _grid);
+            _player.Update(gameTime);
             _player.HandleGridCollisions(_grid);
 
             //Enemy targeting test

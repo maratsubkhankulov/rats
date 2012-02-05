@@ -20,17 +20,18 @@ namespace gj4thFeb2012
 
         public const float MoveSpeed = 0.1F;
         private Facing currentOrientation = default(Facing);
+        private Grid _grid;
 
-        public Player(Texture2D texture, Vector2 position):base(texture, position)
+        public Player(Texture2D texture, Vector2 position, Grid grid):base(texture, position)
         {
-            
+            _grid = grid;
         }
 
-        public void Update(GameTime gameTime, Grid grid)
+        public override void Update(GameTime gameTime)
         {
             float dt = gameTime.ElapsedGameTime.Milliseconds;
 
-            MineHint(grid);
+            MineHint();
 
             KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.A))
@@ -56,22 +57,22 @@ namespace gj4thFeb2012
 
             if (keyboardState.IsKeyDown(Keys.Space))
             {
-                PlaceMine(grid);
+                PlaceMine();
             }
         }
 
-        private void MineHint(Grid grid)
+        private void MineHint()
         {
             int squareX, squareY; 
             CalculateMineSquares(out squareX, out squareY);
-            grid.SetMineHint(squareX, squareY);
+            _grid.SetMineHint(squareX, squareY);
         }
 
-        private void PlaceMine(Grid grid)
+        private void PlaceMine()
         {
             int squareX, squareY; 
             CalculateMineSquares(out squareX, out squareY);
-            grid.SetMine(squareX, squareY);
+            _grid.SetMine(squareX, squareY);
         }
 
         private void CalculateMineSquares(out int squareX, out int squareY)
@@ -110,8 +111,9 @@ namespace gj4thFeb2012
             else
                 xBase = BoundingRectangle.Left;
 
-            squareX = (int)Math.Floor((float)xBase / Grid.TileWidth) + dx;
-            squareY = (int)Math.Floor((float)yBase / Grid.TileWidth) + dy;
+             _grid.IndicesAtCoordinate(xBase, yBase, out squareX, out squareY);
+            squareX += dx;
+            squareY += dy;
         }
 
         public void HandleGridCollisions(Grid grid)

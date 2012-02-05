@@ -34,6 +34,12 @@ namespace gj4thFeb2012
             return new Rectangle(x * TileWidth, y * TileWidth, TileWidth, TileWidth);
         }
 
+        public void IndicesAtCoordinate(float xCoord, float yCoord, out int xIndex, out int yIndex)
+        {
+            xIndex = (int)Math.Floor(xCoord / TileWidth);
+            yIndex = (int)Math.Floor(yCoord / TileWidth);
+        }
+
         public Grid(Texture2D gridTexture, SpriteManager spriteManager, Texture2D floorTexture, Texture2D wallTexture, Texture2D mineTexture, Texture2D mineHintTexture)
         {
             _width = gridTexture.Width;
