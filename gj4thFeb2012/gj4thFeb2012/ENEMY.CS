@@ -137,7 +137,7 @@ namespace gj4thFeb2012
 
         public void SetRandomTarget()
         {
-            staticTarget = this.Position + new Vector2(Game1.random.Next(-100, 100), Game1.random.Next(-100, 100));
+            staticTarget = this.Position + new Vector2(Rng.Next(-100, 100), Rng.Next(-100, 100));
             //Set a random target
         }
     }

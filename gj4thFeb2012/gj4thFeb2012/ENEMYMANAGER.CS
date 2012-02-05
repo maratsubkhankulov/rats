@@ -46,7 +46,7 @@ namespace gj4thFeb2012
             foreach (Enemy e in _enemies)
             {
                 //Grid Collision
-                if (CollisionManager.HandleGridCollisions(grid, e)) e.SetRandomTarget();
+                if (CollisionManager.HandleGridCollisions(_grid, e)) e.SetRandomTarget();
                 
                 //Enemy and player behavior
                 //If an enemy sees the player - follow it
@@ -147,7 +147,7 @@ namespace gj4thFeb2012
 
         public void SetTargetAll(Vector2 v)
         {
-            foreach (Enemy e in enemies)
+            foreach (Enemy e in _enemies)
             {
                 e.SetTarget(v);
             }
