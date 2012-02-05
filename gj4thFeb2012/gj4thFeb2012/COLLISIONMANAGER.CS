@@ -15,7 +15,7 @@ namespace gj4thFeb2012
             entities = new List<Sprite>();
         }
 
-        static public void HandleGridCollisions(Grid grid, Sprite sprite)
+        static public bool HandleGridCollisions(Grid grid, Sprite sprite)
         {
             Rectangle BoundingRectangle = sprite.BoundingRectangle;
             int minX = (int)Math.Floor((float)BoundingRectangle.Left / Grid.TileWidth);
@@ -30,6 +30,7 @@ namespace gj4thFeb2012
                     if (grid.Tiles[y, x] == Grid.Tile.Wall)
                     {
                         sprite.Position += IntersectionDepth(grid.TileBoundingRectangle(x, y), BoundingRectangle);
+                        return true;
                     }
 
                     if (grid.Tiles[y, x] == Grid.Tile.Mine)
@@ -39,6 +40,7 @@ namespace gj4thFeb2012
                     }
                 }
             }
+            return false;
         }
 
         static private Vector2 IntersectionDepth(Rectangle a, Rectangle b)
