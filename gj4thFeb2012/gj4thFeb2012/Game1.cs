@@ -24,7 +24,6 @@ namespace gj4thFeb2012
         Grid _grid;
         EnemyManager _enemyManager;
         CollisionManager collisionManager;
-        public static Random random = new Random();
 
         public Game1()
         {
@@ -72,10 +71,9 @@ namespace gj4thFeb2012
             _enemyManager = new EnemyManager(this, _grid, _camera, this.Content.Load<Texture2D>("enemy"));
             this.Components.Add(_enemyManager);
             
-            Random r = new Random();
             for (int i = 0; i < 10; i++)
             {
-                Enemy e = new Enemy(this.Content.Load<Texture2D>("enemy"), new Vector2(r.Next(150, 200)));
+                Enemy e = new Enemy(this.Content.Load<Texture2D>("enemy"), new Vector2(Rng.Next(150, 200)));
                 _enemyManager.Register(e);
                 _spriteManager.Register(e);
             }

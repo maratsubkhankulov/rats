@@ -33,6 +33,11 @@ namespace gj4thFeb2012
             get { return new Rectangle((int)_position.X, (int)_position.Y, _graphicsDevice.Viewport.Width, _graphicsDevice.Viewport.Height); }
         }
 
+        public Rectangle SpawnRectangle
+        {
+            get { return new Rectangle((int)_position.X - BorderSize, (int)_position.Y - BorderSize, _graphicsDevice.Viewport.Width + 2 * BorderSize, _graphicsDevice.Viewport.Height + 2 * BorderSize); }
+        }
+
         public void Update(GameTime gameTime)
         {
             float dt = gameTime.ElapsedGameTime.Milliseconds;

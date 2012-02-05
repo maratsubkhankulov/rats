@@ -13,13 +13,12 @@ namespace gj4thFeb2012
         State state;
         Sprite target;
         float speed;
-        static Random _r = new Random();
 
         public Enemy(Texture2D texture, Vector2 position) : base(texture, position)
         {
             this.target = null;
 
-            speed = _r.Next(7, 10)/10.0f*2;
+            speed = Rng.Next(7, 10)/10.0f*2;
         }
 
         public override void Update(GameTime gameTime)
@@ -42,12 +41,12 @@ namespace gj4thFeb2012
         private void roam(GameTime gameTime)
         {
             Position += randomRandomOffset(gameTime);
-            //speed = _r.Next(9, 10) / 10.0f;
+            //speed = Rng.Next(9, 10) / 10.0f;
         }
 
         private Vector2 randomRandomOffset(GameTime gameTime)
         {
-            return new Vector2(_r.Next(-1, 1), _r.Next(-1, 1)) * gameTime.ElapsedGameTime.Milliseconds / 100;
+            return new Vector2(Rng.Next(-1, 1), Rng.Next(-1, 1)) * gameTime.ElapsedGameTime.Milliseconds / 100;
         }
 
         private void simpleChase(GameTime gameTime)
