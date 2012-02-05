@@ -10,7 +10,7 @@ namespace gj4thFeb2012
 {
     public class Grid
     {
-        public Tile[,] Tiles;
+        private Tile[,] _tiles;
         public const int TileWidth = 30;
         private int _width;
         private int _height;
@@ -22,12 +22,25 @@ namespace gj4thFeb2012
 
         public enum Tile
         {
+            OutsideGrid,
             Wall,
             Floor,
             Mine
         }
 
         private Dictionary<Color, Tile> tileDictionary = new Dictionary<Color, Tile>(){{Color.Black, Tile.Wall}, {Color.White, Tile.Floor}};
+
+        public Tile GetTile(int x, int y)
+        {
+            if (x >= 0 && x < _tiles.GetLength(0) && y >= 0 && y < _tiles.GetLength(1))
+            {
+                return _tiles[x, y];
+            }
+            else
+            {
+                return Tile.OutsideGrid;
+            }
+        }
 
         public Rectangle TileBoundingRectangle(int x, int y)
         {
@@ -38,6 +51,11 @@ namespace gj4thFeb2012
         {
             xIndex = (int)Math.Floor(xCoord / TileWidth);
             yIndex = (int)Math.Floor(yCoord / TileWidth);
+        }
+
+        public Vector2 PositionAtIndices(int xIndex, int yIndex)
+        {
+            return new Vector2(xIndex*TileWidth, yIndex*TileWidth);
         }
 
         public Grid(Texture2D gridTexture, SpriteManager spriteManager, Texture2D floorTexture, Texture2D wallTexture, Texture2D mineTexture, Texture2D mineHintTexture)
@@ -51,7 +69,7 @@ namespace gj4thFeb2012
 
             _spriteManager.Register(_mineHintSprite);
 
-            Tiles = new Tile[_width, _height];
+            _tiles = new Tile[_width, _height];
 
             Color[] colors1D = new Color[_width * _height];
             gridTexture.GetData(colors1D);
@@ -61,10 +79,10 @@ namespace gj4thFeb2012
                 for (int y = 0; y < _height; y++)
                 {
                     Color color = colors1D[x + y * gridTexture.Width];
-                    Tiles[y, x] = tileDictionary[color];
+                    _tiles[x, y] = tileDictionary[color];
 
                     Sprite sprite;
-                    switch (Tiles[y,x])
+                    switch (_tiles[x,y])
                     {
                             case Tile.Wall:
                                 sprite = new Sprite(wallTexture, new Vector2(x * TileWidth, y * TileWidth), 1.0F);
@@ -85,7 +103,7 @@ namespace gj4thFeb2012
 
         internal void SetMine(int x, int y)
         {
-            Tiles[y, x] = Tile.Mine;
+            _tiles[x, y] = Tile.Mine;
             Sprite mine = new Sprite(_mineTexture, new Vector2(x * TileWidth, y * TileWidth));
             //_mineSprites.Add(mine);
             _spriteManager.Register(mine);
@@ -93,7 +111,7 @@ namespace gj4thFeb2012
 
         public void RemoveMine(int x, int y)
         {
-            Tiles[y, x] = Tile.Floor;
+            _tiles[x, y] = Tile.Floor;
         }
 
         internal void SetMineHint(int x, int y)

@@ -27,12 +27,12 @@ namespace gj4thFeb2012
             {
                 for (int y = minY; y <= maxY; y++)
                 {
-                    if (grid.Tiles[y, x] == Grid.Tile.Wall)
+                    if (grid.GetTile(x, y) == Grid.Tile.Wall)
                     {
                         sprite.Position += IntersectionDepth(grid.TileBoundingRectangle(x, y), BoundingRectangle);
                     }
 
-                    if (grid.Tiles[y, x] == Grid.Tile.Mine)
+                    if (grid.GetTile(x, y) == Grid.Tile.Mine)
                     {
                          sprite.HandleCollision(null);
                          grid.RemoveMine(x, y);

@@ -68,7 +68,7 @@ namespace gj4thFeb2012
             this.Components.Add(collisionManager);
 
             //Test enemies
-            _enemyManager = new EnemyManager(this, _grid, _camera, this.Content.Load<Texture2D>("enemy"));
+            _enemyManager = new EnemyManager(this, _grid, _camera, _spriteManager, this.Content.Load<Texture2D>("enemy"));
             this.Components.Add(_enemyManager);
             
             for (int i = 0; i < 10; i++)

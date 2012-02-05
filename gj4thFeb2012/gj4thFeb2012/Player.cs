@@ -127,7 +127,7 @@ namespace gj4thFeb2012
             {
                 for (int y = minY; y <= maxY; y++)
                 {
-                    if (grid.Tiles[y, x] == Grid.Tile.Wall)
+                    if (grid.GetTile(x, y) == Grid.Tile.Wall)
                     {
                         Position += IntersectionDepth(grid.TileBoundingRectangle(x,y), BoundingRectangle);
                     }

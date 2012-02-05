@@ -32,7 +32,7 @@ namespace gj4thFeb2012
             _currentMs -= dt;
             if (_currentMs <= 0)
             {
-                _currentMs = _lengthMs;
+                Reset();
                 _callback();
             }
         }

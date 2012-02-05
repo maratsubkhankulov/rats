@@ -12,16 +12,23 @@ namespace gj4thFeb2012
         private readonly List<Enemy> _enemies;
         private readonly Grid _grid;
         private readonly Camera _camera;
+        private readonly SpriteManager _spriteManager;
         private readonly Texture2D _enemyTexture;
         private Timer _spawnTimer;
 
-        public EnemyManager(Game game, Grid grid, Camera camera, Texture2D enemyTexture) : base(game)
+        private int enemySpawnNumber = 10;
+        private int enemySpawnDelay = 1000; // ms
+
+        public EnemyManager(Game game, Grid grid, Camera camera, SpriteManager spriteManager, Texture2D enemyTexture) : base(game)
         {
             _enemies = new List<Enemy>();
             _grid = grid;
             _camera = camera;
+            _spriteManager = spriteManager;
             _enemyTexture = enemyTexture;
-            _spawnTimer = new Timer(2000, SpawnAtEdge);
+
+            _spawnTimer = new Timer(enemySpawnDelay, SpawnAtEdge);
+            _spawnTimer.Start();
         }
 
         public override void Update(GameTime gameTime)
@@ -43,7 +50,7 @@ namespace gj4thFeb2012
                     if (e.isDead()) break;
                     if (e == f) break;
                     float dist = Vector2.Distance(e.Position, f.Position);
-                    if (dist == 0) { e.Move(new Vector2(Game1.random.Next(5, 10) / 10, Game1.random.Next(5, 10) / 10)); break; }
+                    if (dist == 0) { e.Move(new Vector2(Rng.Next(5, 10) / 10, Rng.Next(5, 10) / 10)); break; }
                     //Get difference vector
                     Vector2 dif = e.Position - f.Position;
                     dif = (Vector2.Normalize(dif))*1.0f;
@@ -70,7 +77,47 @@ namespace gj4thFeb2012
 
         public void SpawnAtEdge()
         {
-            
+            SpawnAtEdge(enemySpawnNumber);
+        }
+
+        public void SpawnAtEdge(int numberOfEnemies)
+        {
+            int xCoord, yCoord, xIndex, yIndex;
+            bool randomX, topLeftSide;
+            Rectangle spawnRectangle = _camera.SpawnRectangle;
+
+            for (int i = 0; i < numberOfEnemies - 1; i++)
+            {
+                randomX = Rng.Next(2) == 1;
+                topLeftSide = Rng.Next(2) == 1;
+
+                if (randomX)
+                {
+                    xCoord = Rng.Next(spawnRectangle.Left, spawnRectangle.Right);
+                    if (topLeftSide)
+                        yCoord = spawnRectangle.Top;
+                    else
+                        yCoord = spawnRectangle.Bottom;
+                }
+                else
+                {
+                    yCoord = Rng.Next(spawnRectangle.Top, spawnRectangle.Bottom);
+                    if (topLeftSide)
+                        xCoord = spawnRectangle.Left;
+                    else
+                        xCoord = spawnRectangle.Right;
+                }
+
+                _grid.IndicesAtCoordinate(xCoord, yCoord, out xIndex, out yIndex);
+                
+                if (_grid.GetTile(xIndex, yIndex) == Grid.Tile.Floor)
+                {
+                    Enemy enemySprite = new Enemy(_enemyTexture, _grid.PositionAtIndices(xIndex, yIndex));
+                    Register(enemySprite);
+                    _spriteManager.Register(enemySprite);
+                }
+                    
+            }
         }
 
         public void SetTargetAll(Sprite sprite)
